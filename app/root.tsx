@@ -25,7 +25,7 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="ko" className=" bg-slate-900">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -62,14 +62,24 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
-      )}
-    </main>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+      <main className="p-8 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 max-w-2xl mx-4">
+        <h1 className="text-4xl font-bold text-white mb-4">{message}</h1>
+        <p className="text-gray-300 text-lg mb-6">{details}</p>
+        {stack && (
+          <pre className="w-full p-4 bg-black/20 rounded-lg overflow-x-auto text-gray-300 text-sm">
+            <code>{stack}</code>
+          </pre>
+        )}
+        <div className="mt-6">
+          <a
+            href="/"
+            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            홈으로 돌아가기
+          </a>
+        </div>
+      </main>
+    </div>
   );
 }

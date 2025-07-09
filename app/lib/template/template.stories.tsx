@@ -4,9 +4,9 @@ import {
   generateReadmeTemplate,
   generateImpactTemplate,
   generateTechExpertTemplate,
-} from "./template";
-import { mockGitHubData } from "./mock-data";
-import { mockTechExpertData } from "./mock-tech-expert-data";
+} from ".";
+import { mockGitHubData } from "../mock-data";
+import { mockTechExpertData } from "../mock-tech-expert-data";
 
 const meta: Meta<typeof ReadmeOutput> = {
   title: "Templates/Templates",

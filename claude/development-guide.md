@@ -122,6 +122,44 @@ GITHUB_TOKEN=your_github_token_here
 - **Result 패턴**: 성공/실패 상태를 타입으로 표현
 - **Validation**: 런타임 타입 검증
 
+## 커밋 관리 원칙
+
+### 작업 단위별 커밋 생성
+
+**기본 원칙:**
+- 기능 완성 시점에 즉시 커밋 작성
+- 관심사별로 커밋을 분리하여 변경사항 추적 용이
+- 커밋 메시지는 변경 내용과 목적을 명확히 표현
+
+**커밋 메시지 형식:**
+```
+type: brief description
+
+- Detailed changes (if needed)
+- Multiple changes listed separately
+- Focus on "why" rather than "what"
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+```
+
+**커밋 타입:**
+- `feat`: 새로운 기능 추가
+- `fix`: 버그 수정  
+- `refactor`: 코드 리팩터링
+- `docs`: 문서 업데이트
+- `style`: 코드 스타일 변경
+- `test`: 테스트 추가/수정
+- `chore`: 빌드/설정 변경
+
+**커밋 시점:**
+- 새로운 컴포넌트/기능 완성 후
+- 버그 수정 완료 후
+- 리팩터링 작업 완료 후
+- 문서 업데이트 완료 후
+- 설정 변경 완료 후
+
 ## 모범 사례
 
 - 항상 설명적인 변수명을 사용하세요
@@ -129,3 +167,4 @@ GITHUB_TOKEN=your_github_token_here
 - 각 파일은 명확한 단일 목적을 가져야 합니다
 - 공통 함수는 독립적으로 분리하세요
 - 패키지 매니저는 pnpm을 사용하세요 (npm 대신)
+- **작업 완료 시 반드시 커밋을 작성하세요**

@@ -3,28 +3,35 @@
 ## 개발 명령어
 
 **개발 서버:**
+
 ```bash
 pnpm run dev
 ```
+
 서버는 HMR이 활성화된 상태로 `http://localhost:5173`에서 실행됩니다.
 
 **빌드:**
+
 ```bash
 pnpm run build
 ```
 
 **타입 검사:**
+
 ```bash
 pnpm run typecheck
 ```
+
 React Router 타입 생성 및 TypeScript 컴파일을 실행합니다.
 
 **프로덕션 서버:**
+
 ```bash
 pnpm run start
 ```
 
 **Storybook:**
+
 ```bash
 pnpm run storybook
 ```
@@ -83,11 +90,13 @@ GITHUB_TOKEN=your_github_token_here
 ### 타입 안전성 원칙
 
 1. **엄격한 타입 정의**: `any` 타입 사용 금지
+
    - 모든 함수, 변수, 객체는 명시적 타입 정의
    - 외부 API 응답도 적절한 인터페이스로 정의
    - 타입 추론보다 명시적 타입 선언 선호
 
 2. **인터페이스 활용**: 재사용 가능한 타입 구조
+
    ```typescript
    // 올바른 예시
    interface GitHubUser {
@@ -101,6 +110,7 @@ GITHUB_TOKEN=your_github_token_here
    ```
 
 3. **제네릭 타입**: 타입 안전성과 재사용성 확보
+
    ```typescript
    async function fetchFromGitHubApi<T>(endpoint: string): Promise<T>;
    ```
@@ -127,11 +137,13 @@ GITHUB_TOKEN=your_github_token_here
 ### 작업 단위별 커밋 생성
 
 **기본 원칙:**
+
 - 기능 완성 시점에 즉시 커밋 작성
 - 관심사별로 커밋을 분리하여 변경사항 추적 용이
 - 커밋 메시지는 변경 내용과 목적을 명확히 표현
 
 **커밋 메시지 형식:**
+
 ```
 type: brief description
 
@@ -145,8 +157,9 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 ```
 
 **커밋 타입:**
+
 - `feat`: 새로운 기능 추가
-- `fix`: 버그 수정  
+- `fix`: 버그 수정
 - `refactor`: 코드 리팩터링
 - `docs`: 문서 업데이트
 - `style`: 코드 스타일 변경
@@ -154,11 +167,21 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 - `chore`: 빌드/설정 변경
 
 **커밋 시점:**
+
 - 새로운 컴포넌트/기능 완성 후
 - 버그 수정 완료 후
 - 리팩터링 작업 완료 후
 - 문서 업데이트 완료 후
 - 설정 변경 완료 후
+- Storybook 스토리 작성 완료 후
+
+**⚠️ Claude에게 중요한 지침:**
+작업이 완료되면 **즉시** 다음 단계를 수행해야 합니다:
+
+1. `git status`로 변경사항 확인
+2. `git add` 명령으로 파일 스테이징
+3. 적절한 커밋 메시지로 커밋 생성
+4. 다음 작업으로 넘어가기 전 반드시 커밋 완료
 
 ## 모범 사례
 

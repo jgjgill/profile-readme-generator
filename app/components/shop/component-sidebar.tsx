@@ -1,6 +1,6 @@
 import { COMPONENT_CATEGORIES } from "~/lib/constants/component-categories";
 
-type ComponentType = "timeline" | "wave-banner" | "neon-sign";
+type ComponentType = "timeline" | "wave-banner" | "neon-sign" | "typing-animation";
 
 interface ComponentSidebarProps {
   activeComponent: ComponentType;

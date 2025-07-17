@@ -29,6 +29,13 @@ export const COMPONENT_CATEGORIES: ComponentCategory[] = [
     status: "available" as const,
   },
   {
+    id: "typing-animation",
+    name: "타이핑 애니메이션",
+    description: "타이핑 효과로 동적인 자기소개 표시",
+    icon: "⌨️",
+    status: "available" as const,
+  },
+  {
     id: "github-stats",
     name: "GitHub 통계 카드",
     description: "커밋, 스타, PR 통계를 한눈에 보여주는 카드",

@@ -4,8 +4,9 @@ import { ComponentSidebar } from "~/components/shop/component-sidebar";
 import { TimelineShop } from "~/components/shop/timeline-shop";
 import { WaveBannerShop } from "~/components/shop/wave-banner-shop";
 import { NeonSignShop } from "~/components/shop/neon-sign-shop";
+import { TypingAnimationShop } from "~/components/shop/typing-animation-shop";
 
-type ComponentType = "timeline" | "wave-banner" | "neon-sign";
+type ComponentType = "timeline" | "wave-banner" | "neon-sign" | "typing-animation";
 
 export default function ComponentShop() {
   const [activeComponent, setActiveComponent] =
@@ -59,6 +60,9 @@ export default function ComponentShop() {
             )}
             {activeComponent === "neon-sign" && (
               <NeonSignShop origin={origin} />
+            )}
+            {activeComponent === "typing-animation" && (
+              <TypingAnimationShop origin={origin} />
             )}
           </div>
         </div>

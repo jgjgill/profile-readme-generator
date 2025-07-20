@@ -89,21 +89,25 @@ export function ErrorBoundary() {
 }
 
 export default function GeneratePage() {
-  const { githubData, techExpertData, isLoggedIn, userInfo } = useLoaderData<LoaderData>();
+  const { githubData, techExpertData, isLoggedIn, userInfo } =
+    useLoaderData<LoaderData>();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex flex-col">
       <Header currentPage="home" isLoggedIn={isLoggedIn} userInfo={userInfo} />
-      
+
       <BackgroundAnimation variant="generate" />
 
       <div className="flex-1 relative z-10 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <CompletionHeader />
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             <UserInfoSidebar userData={githubData} />
-            <TemplateContent githubData={githubData} techExpertData={techExpertData} />
+            <TemplateContent
+              githubData={githubData}
+              techExpertData={techExpertData}
+            />
           </div>
         </div>
       </div>

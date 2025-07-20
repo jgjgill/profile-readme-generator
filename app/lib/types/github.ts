@@ -5,6 +5,8 @@ export interface GitHubUserProfile {
   bio: string | null;
   public_repos: number;
   html_url: string;
+  created_at: string;
+  followers: number;
 }
 
 export interface GitHubRepository {
@@ -13,6 +15,7 @@ export interface GitHubRepository {
   description: string | null;
   html_url: string;
   stargazers_count: number;
+  forks_count: number;
   language: string | null;
   topics: string[];
   created_at: string;
@@ -45,7 +48,7 @@ export interface TechExpertData extends ProcessedGitHubData {
 
 export interface LanguageExpertise {
   [language: string]: {
-    proficiencyLevel: 'Expert' | 'Advanced' | 'Intermediate' | 'Beginner';
+    proficiencyLevel: "Expert" | "Advanced" | "Intermediate" | "Beginner";
     repositoryCount: number;
     totalBytes: number;
     averageStars: number;
@@ -55,7 +58,7 @@ export interface LanguageExpertise {
 
 export interface CodeQualityMetrics {
   documentationScore: number; // README, 설명 품질 점수
-  projectMaturity: number; // 프로젝트 완성도 점수  
+  projectMaturity: number; // 프로젝트 완성도 점수
   codeOrganization: number; // 코드 구성 점수
   communityEngagement: number; // 커뮤니티 참여 점수
 }
@@ -64,7 +67,7 @@ export interface TechnicalDepth {
   primaryExpertise: string; // 주요 전문 분야
   secondarySkills: string[]; // 보조 기술들
   modernTechAdoption: boolean; // 최신 기술 채택 여부
-  projectComplexity: 'High' | 'Medium' | 'Low'; // 프로젝트 복잡도
+  projectComplexity: "High" | "Medium" | "Low"; // 프로젝트 복잡도
 }
 
 // 추가 기술 전문가 데이터 타입들
@@ -121,7 +124,7 @@ export interface GitHubIssueOrPR {
   id: number;
   number: number;
   title: string;
-  state: 'open' | 'closed';
+  state: "open" | "closed";
   created_at: string;
   updated_at: string;
   body: string | null;
@@ -130,7 +133,7 @@ export interface GitHubIssueOrPR {
 export interface GitHubFileContent {
   name: string;
   path: string;
-  type: 'file' | 'dir';
+  type: "file" | "dir";
   size: number;
   download_url: string | null;
 }

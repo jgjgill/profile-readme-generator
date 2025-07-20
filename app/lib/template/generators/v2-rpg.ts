@@ -11,7 +11,6 @@ export function generateRPGTemplate(
   const {
     userProfile,
     topRepositories,
-    languageStats,
     topLanguages,
   } = githubData;
 
@@ -20,7 +19,7 @@ export function generateRPGTemplate(
     (sum, repo) => sum + repo.stargazers_count,
     0
   );
-  const totalCommits = Math.floor(Math.random() * 500) + 200; // 임시: 실제 커밋 API로 교체 예정
+  const totalCommits = Math.floor((userProfile.login.length * totalStars) % 500) + 200; // 임시: 사용자별 고정값
 
   // 종합 경험치 계산
   const totalExperience = totalCommits + totalStars * 2 + topRepositories.length * 50;
@@ -96,19 +95,14 @@ export function generateRPGTemplate(
 
 ${rpgStats.skills
   .map((skill, index) => {
-    // 언어별 사용 빈도를 기반으로 별점 계산
-    const languageValue = languageStats[skill] || 0;
-    const maxValue = Math.max(...Object.values(languageStats));
-    const stars =
-      maxValue > 0
-        ? Math.min(Math.floor((languageValue / maxValue) * 5) + 1, 5)
-        : 3;
+    // 언어별 기본 별점 계산 (순서 기반)
+    const stars = Math.max(5 - index, 3); // 첫 번째는 5점, 최소 3점
 
     return `### ${
       ["⚔️", "🛡️", "🏹", "🔮"][index] || "⭐"
     } ${skill} ${"★".repeat(stars)}${"☆".repeat(5 - stars)}
   
-  **숙련도**: ${stars}성 | **코드량**: ${languageValue.toLocaleString()}bytes`;
+  **숙련도**: ${stars}성`;
   })
   .join("\n\n")}
 

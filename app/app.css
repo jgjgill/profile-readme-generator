@@ -1,11 +1,6 @@
 @import "tailwindcss";
 @import "highlight.js/styles/github.css";
 
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-}
-
 /* 전역 레이아웃 스타일 */
 html,
 body {

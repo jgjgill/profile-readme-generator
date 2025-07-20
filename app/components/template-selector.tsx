@@ -1,7 +1,6 @@
 import { useState } from "react";
 import type { ProcessedGitHubData, TechExpertData } from "~/lib/types/github";
 import type { ReadmeTemplate } from "~/lib/types/template";
-// 기존 v1 템플릿들 (미사용)
 import { generateDashboardTemplate } from "~/lib/template/generators/v2-dashboard";
 import { generateRPGTemplate } from "~/lib/template/generators/v2-rpg";
 import { generateMagazineTemplate } from "~/lib/template/generators/v2-magazine";
@@ -38,8 +37,8 @@ const templateOptions: TemplateOption[] = [
     features: ["비즈니스 메트릭", "성과 지표", "ROI 분석", "포트폴리오 다양성"],
     theme: {
       primaryColor: "#1E40AF",
-      style: "corporate"
-    }
+      style: "corporate",
+    },
   },
   {
     id: "rpg",
@@ -50,8 +49,8 @@ const templateOptions: TemplateOption[] = [
     features: ["레벨 시스템", "업적 달성", "스킬 트리", "경험치 획득"],
     theme: {
       primaryColor: "#7C3AED",
-      style: "fantasy"
-    }
+      style: "fantasy",
+    },
   },
   {
     id: "magazine",
@@ -62,8 +61,8 @@ const templateOptions: TemplateOption[] = [
     features: ["헤드라인 기사", "프로젝트 스토리", "인포그래픽", "성공 사례"],
     theme: {
       primaryColor: "#059669",
-      style: "editorial"
-    }
+      style: "editorial",
+    },
   },
   {
     id: "certificate",
@@ -74,14 +73,13 @@ const templateOptions: TemplateOption[] = [
     features: ["자격 증명", "공인 기관", "정량적 성과", "발급 일자"],
     theme: {
       primaryColor: "#374151",
-      style: "formal"
-    }
+      style: "formal",
+    },
   },
 ];
 
 export default function TemplateSelector({
   githubData,
-  techExpertData,
 }: TemplateSelectorProps) {
   const [selectedTemplate, setSelectedTemplate] =
     useState<TemplateType>("dashboard");
@@ -92,7 +90,7 @@ export default function TemplateSelector({
       case "dashboard":
         return generateDashboardTemplate(githubData);
       case "rpg":
-        return generateRPGTemplate(githubData);  
+        return generateRPGTemplate(githubData);
       case "magazine":
         return generateMagazineTemplate(githubData);
       case "certificate":

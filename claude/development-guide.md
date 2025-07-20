@@ -24,6 +24,50 @@ pnpm run typecheck
 
 React Router 타입 생성 및 TypeScript 컴파일을 실행합니다.
 
+## 🔄 새로운 라우트 추가 체크리스트
+
+새로운 페이지나 API를 추가할 때 **반드시** 다음 순서를 따르세요:
+
+### 1. 라우트 파일 생성
+```bash
+# 페이지 라우트
+app/routes/new-page.tsx
+
+# API 라우트  
+app/routes/api.new-endpoint.tsx
+```
+
+### 2. routes.ts 설정 추가 ⚠️ **필수!**
+```typescript
+// app/routes.ts
+export default [
+  // ... 기존 라우트들
+  route("new-page", "routes/new-page.tsx"),           // 페이지
+  route("api/new-endpoint", "routes/api.new-endpoint.tsx"), // API
+] satisfies RouteConfig;
+```
+
+### 3. 타입 검사 실행
+```bash
+pnpm run typecheck
+```
+
+### ❌ 자주하는 실수
+- 라우트 파일만 생성하고 `routes.ts` 업데이트 깜빡
+- API 라우트 경로 불일치 (`api.test.tsx` ↔ `api/test`)
+- 타입 에러 무시하고 진행
+
+### ✅ 올바른 예시
+```typescript
+// ✅ 올바른 API 라우트 매핑
+route("api/cache-test", "routes/api.cache-test.tsx")
+route("cache-test", "routes/cache-test.tsx")
+
+// ❌ 틀린 매핑
+route("api/cache-test", "routes/api.cache-test.tsx") // 파일명과 불일치
+route("cache-test", "cache-test.tsx") // 경로 누락
+```
+
 **프로덕션 서버:**
 
 ```bash

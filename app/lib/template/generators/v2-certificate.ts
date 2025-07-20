@@ -6,7 +6,7 @@ import type { ReadmeTemplate } from "~/lib/types/template";
  * 학위증명서나 자격증처럼 공식적이고 격식있는 문서
  */
 export function generateCertificateTemplate(githubData: ProcessedGitHubData): ReadmeTemplate {
-  const { userProfile, topRepositories, languageStats, topLanguages, mostStarredRepository } = githubData;
+  const { userProfile, topRepositories, topLanguages, mostStarredRepository } = githubData;
   
   // 총 스타 수 계산
   const totalStars = topRepositories.reduce((sum, repo) => sum + repo.stargazers_count, 0);

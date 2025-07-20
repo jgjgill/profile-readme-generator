@@ -139,7 +139,7 @@ export default function ReadmeOutput({ template }: ReadmeOutputProps) {
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2">
-                {Object.entries(template.sections).map(([key, content]) => {
+                {Object.entries(template.sections || {}).map(([key, content]) => {
                   if (!content || content.trim() === "") return null;
                   
                   const label = getSectionLabel(key);

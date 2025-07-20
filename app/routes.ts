@@ -11,4 +11,5 @@ export default [
   route("api/wave-banner", "routes/api.wave-banner.tsx"),
   route("api/neon-sign", "routes/api.neon-sign.tsx"),
   route("api/typing-animation", "routes/api.typing-animation.tsx"),
+  route("api/dashboard-executive", "routes/api.dashboard-executive.tsx"),
 ] satisfies RouteConfig;

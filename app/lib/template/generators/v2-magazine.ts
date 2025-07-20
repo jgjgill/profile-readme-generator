@@ -6,7 +6,7 @@ import type { ReadmeTemplate } from "~/lib/types/template";
  * 기술 매거진의 개발자 프로필 기사처럼 작성
  */
 export function generateMagazineTemplate(githubData: ProcessedGitHubData): ReadmeTemplate {
-  const { userProfile, topRepositories, languageStats, topLanguages, mostStarredRepository } = githubData;
+  const { userProfile, topRepositories, topLanguages, mostStarredRepository } = githubData;
   
   // 총 스타 수 계산
   const totalStars = topRepositories.reduce((sum, repo) => sum + repo.stargazers_count, 0);

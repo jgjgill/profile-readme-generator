@@ -16,7 +16,11 @@ interface HeaderProps {
   } | null;
 }
 
-export function Header({ currentPage, isLoggedIn = false, userInfo = null }: HeaderProps) {
+export function Header({
+  currentPage,
+  isLoggedIn = false,
+  userInfo = null,
+}: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
@@ -32,14 +36,14 @@ export function Header({ currentPage, isLoggedIn = false, userInfo = null }: Hea
             <UserMenu isLoggedIn={isLoggedIn} userInfo={userInfo} />
           </div>
 
-          <HamburgerButton 
-            isOpen={isMobileMenuOpen} 
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+          <HamburgerButton
+            isOpen={isMobileMenuOpen}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           />
         </div>
       </div>
 
-      <MobileNav 
+      <MobileNav
         currentPage={currentPage}
         isLoggedIn={isLoggedIn}
         userInfo={userInfo}

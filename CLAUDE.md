@@ -10,7 +10,8 @@
 - **[아키텍처 가이드](./claude/architecture.md)** - 기술 스택, 프로젝트 구조, 핵심 설정
 - **[개발 가이드](./claude/development-guide.md)** - 개발 명령어, 환경 설정, 코딩 규칙
 - **[기술적 결정사항](./claude/technical-decisions.md)** - 주요 아키텍처 결정, UI/UX 개선사항
-- **[템플릿 시스템](./claude/template-system.md)** - 템플릿 철학, 차별화 전략
+- **[템플릿 시스템 v1](./claude/template-system.md)** - 기본 템플릿 철학
+- **[템플릿 시스템 v2](./claude/template-system-v2.md)** - 4가지 테마 시스템, API 전략
 - **[SVG 컴포넌트](./claude/svg-components.md)** - SVG 컴포넌트 상점 시스템
 - **[GitHub API 전략](./claude/github-api.md)** - API 사용 전략, 데이터 수집 방식
 
@@ -34,17 +35,19 @@ pnpm run dev
 
 ### ✅ 완성된 기능
 
-- GitHub README 템플릿 생성 (3가지 타입)
-- SVG 컴포넌트 상점 (타임라인, 파도배너, 네온사인)
-- OAuth 기반 로그인/세션 관리
-- 반응형 디자인 시스템
-- 모듈화된 템플릿 시스템
+- **v2 템플릿 시스템 (4가지 테마)**: 대시보드형, RPG형, 매거진형, 이력서형
+- **동적 SVG API**: GitHub 데이터 기반 실시간 업데이트
+- **SVG 컴포넌트 상점**: 타임라인, 파도배너, 네온사인, 타이핑 애니메이션
+- **OAuth 기반 로그인/세션 관리**: GitHub OAuth + 세션 토큰
+- **반응형 디자인 시스템**: 모바일 퍼스트 + TailwindCSS v4
+- **모듈화된 컴포넌트 아키텍처**: 관심사 분리 완료
 
 ### 🔄 진행 중인 작업
 
-- 번들 크기 최적화 (highlight.js 선택적 import)
-- 코드 분할 (Dynamic Import) 적용
-- 컴포넌트 지연 로딩 구현
+- **성능 최적화**: 번들 크기 최적화 (highlight.js 선택적 import)
+- **코드 분할**: Dynamic Import 적용으로 초기 로딩 개선
+- **캐싱 전략**: GitHub API 24시간 캐싱 시스템 구현
+- **템플릿 차별화**: 각 테마별 고유 API 컴포넌트 확장
 
 ## 📝 개발 원칙
 

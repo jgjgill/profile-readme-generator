@@ -29,7 +29,6 @@ export interface GitHubLanguageStats {
 export interface ProcessedGitHubData {
   userProfile: GitHubUserProfile;
   topRepositories: GitHubRepository[];
-  languageStats: GitHubLanguageStats;
   topLanguages: string[];
   mostStarredRepository: GitHubRepository | null;
 }

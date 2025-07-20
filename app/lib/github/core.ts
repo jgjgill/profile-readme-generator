@@ -109,33 +109,13 @@ export async function fetchCompleteGitHubData(
       .sort((repoA, repoB) => repoB.stargazers_count - repoA.stargazers_count)
       .slice(0, 3);
 
-    // API 호출 수 줄이기: 상위 5개 저장소만 언어 정보 가져오기
-    const topReposForLanguages = repositories
-      .sort((repoA, repoB) => repoB.stargazers_count - repoA.stargazers_count)
-      .slice(0, 5)
-      .filter((repo) => repo.language); // 언어가 있는 저장소만
-
-    const languageStatsPromises = topReposForLanguages.map((repo) =>
-      fetchRepositoryLanguages(repo.full_name, token)
-    );
-
-    const allLanguageStats = await Promise.all(languageStatsPromises);
-
-    const combinedLanguageStats: GitHubLanguageStats = {};
-    allLanguageStats.forEach((repoLanguages) => {
-      Object.entries(repoLanguages).forEach(([language, bytes]) => {
-        combinedLanguageStats[language] =
-          (combinedLanguageStats[language] || 0) + bytes;
-      });
-    });
-
-    const topLanguages = calculateTopLanguages(combinedLanguageStats);
+    // 저장소 메타데이터에서 언어 정보 추출 (추가 API 호출 없이)
+    const topLanguages = calculateTopLanguagesFromRepos(repositories);
     const mostStarredRepository = findMostStarredRepository(repositories);
 
     return {
       userProfile,
       topRepositories,
-      languageStats: combinedLanguageStats,
       topLanguages,
       mostStarredRepository,
     };
@@ -151,14 +131,20 @@ export async function fetchCompleteGitHubData(
   }
 }
 
-function calculateTopLanguages(languageStats: GitHubLanguageStats): string[] {
-  const languageEntries = Object.entries(languageStats);
-  const sortedLanguages = languageEntries
-    .sort(([, bytesA], [, bytesB]) => bytesB - bytesA)
+function calculateTopLanguagesFromRepos(repositories: GitHubRepository[]): string[] {
+  // 저장소의 주 언어를 카운트하여 상위 3개 추출
+  const languageCount: Record<string, number> = {};
+  
+  repositories
+    .filter(repo => repo.language) // 언어가 있는 저장소만
+    .forEach(repo => {
+      languageCount[repo.language!] = (languageCount[repo.language!] || 0) + 1;
+    });
+
+  return Object.entries(languageCount)
+    .sort(([, countA], [, countB]) => countB - countA)
     .slice(0, 3)
     .map(([language]) => language);
-
-  return sortedLanguages;
 }
 
 function findMostStarredRepository(

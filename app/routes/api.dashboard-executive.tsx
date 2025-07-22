@@ -264,12 +264,6 @@ function generateCorporateDashboard({
       }">
         LIVE • Last updated: ${new Date().toLocaleTimeString()}
       </text>
-      
-      <text x="700" y="585" font-family="system-ui, -apple-system" font-size="11" fill="${
-        colors.gray
-      }">
-        GitHub Analytics Platform
-      </text>
     </svg>
   `;
 }

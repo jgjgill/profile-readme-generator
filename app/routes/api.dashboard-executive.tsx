@@ -1,5 +1,6 @@
 import type { LoaderFunctionArgs } from "react-router";
 import { fetchCompleteGitHubData } from "~/lib/github";
+import { getGitHubToken } from "~/lib/session";
 
 interface DashboardMetrics {
   revenue: number;
@@ -12,21 +13,22 @@ interface DashboardData {
   username: string;
   metrics: DashboardMetrics;
   repositories: any[];
-  theme: string;
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const username = url.searchParams.get("username");
-  const theme = url.searchParams.get("theme") || "corporate";
 
   if (!username) {
     throw new Response("Username required", { status: 400 });
   }
 
   try {
-    // GitHub 데이터 가져오기
-    const githubData = await fetchCompleteGitHubData(username);
+    // 세션에서 GitHub OAuth 토큰 가져오기 (로그인한 사용자만 토큰 혜택)
+    const token = await getGitHubToken(request);
+
+    // GitHub 데이터 가져오기 (캐싱 및 토큰 적용됨)
+    const githubData = await fetchCompleteGitHubData(username, token);
 
     // 비즈니스 메트릭 계산
     const totalStars = githubData.topRepositories.reduce(
@@ -46,7 +48,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
         roi: calculateROI(totalStars, projectCount), // ROI
       },
       repositories: githubData.topRepositories.slice(0, 4),
-      theme,
     });
 
     return new Response(svg, {
@@ -68,7 +69,6 @@ function generateCorporateDashboard({
   username,
   metrics,
   repositories,
-  theme,
 }: DashboardData) {
   const colors = {
     background: "#0F172A", // Dark Navy

@@ -4,6 +4,7 @@ import type {
   GitHubLanguageStats,
   ProcessedGitHubData,
 } from "../types/github";
+import { memoryCache, createGitHubCacheKey, logCacheStats } from "../cache/memory";
 
 const GITHUB_API_BASE_URL = "https://api.github.com";
 
@@ -67,21 +68,53 @@ export async function fetchGitHubUserProfile(
   username: string,
   token?: string
 ): Promise<GitHubUserProfile> {
-  return fetchFromGitHubApi<GitHubUserProfile>(`/users/${username}`, token);
+  const cacheKey = createGitHubCacheKey(username, "profile");
+  
+  // 캐시에서 확인
+  const cachedProfile = memoryCache.get<GitHubUserProfile>(cacheKey);
+  if (cachedProfile) {
+    logCacheStats();
+    return cachedProfile;
+  }
+
+  // API 호출
+  const profile = await fetchFromGitHubApi<GitHubUserProfile>(`/users/${username}`, token);
+  
+  // 캐시에 저장 (24시간)
+  memoryCache.set(cacheKey, profile);
+  logCacheStats();
+  
+  return profile;
 }
 
 export async function fetchUserRepositories(
   username: string,
   token?: string
 ): Promise<GitHubRepository[]> {
+  const cacheKey = createGitHubCacheKey(username, "repositories");
+  
+  // 캐시에서 확인
+  const cachedRepositories = memoryCache.get<GitHubRepository[]>(cacheKey);
+  if (cachedRepositories) {
+    logCacheStats();
+    return cachedRepositories;
+  }
+
+  // API 호출
   const repositories = await fetchFromGitHubApi<GitHubRepository[]>(
     `/users/${username}/repos?sort=updated&per_page=100`,
     token
   );
 
-  return repositories.filter(
+  const filteredRepositories = repositories.filter(
     (repo) => !repo.name.startsWith(".") && repo.stargazers_count >= 0
   );
+  
+  // 캐시에 저장 (24시간)
+  memoryCache.set(cacheKey, filteredRepositories);
+  logCacheStats();
+
+  return filteredRepositories;
 }
 
 export async function fetchRepositoryLanguages(
@@ -99,7 +132,16 @@ export async function fetchCompleteGitHubData(
   token?: string
 ): Promise<ProcessedGitHubData> {
   try {
-    // 병렬로 사용자 프로필과 저장소 정보 가져오기
+    const cacheKey = createGitHubCacheKey(username, "complete");
+    
+    // 전체 데이터 캐시에서 확인
+    const cachedData = memoryCache.get<ProcessedGitHubData>(cacheKey);
+    if (cachedData) {
+      logCacheStats();
+      return cachedData;
+    }
+
+    // 병렬로 사용자 프로필과 저장소 정보 가져오기 (각각 캐시 확인됨)
     const [userProfile, repositories] = await Promise.all([
       fetchGitHubUserProfile(username, token),
       fetchUserRepositories(username, token),
@@ -113,12 +155,18 @@ export async function fetchCompleteGitHubData(
     const topLanguages = calculateTopLanguagesFromRepos(repositories);
     const mostStarredRepository = findMostStarredRepository(repositories);
 
-    return {
+    const completeData: ProcessedGitHubData = {
       userProfile,
       topRepositories,
       topLanguages,
       mostStarredRepository,
     };
+
+    // 전체 데이터를 캐시에 저장 (24시간)
+    memoryCache.set(cacheKey, completeData);
+    logCacheStats();
+
+    return completeData;
   } catch (error) {
     if (error instanceof GitHubApiError) {
       throw error;

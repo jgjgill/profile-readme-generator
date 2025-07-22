@@ -15,12 +15,6 @@ const { getSession, commitSession, destroySession } =
 
 export { getSession, commitSession, destroySession };
 
-// OAuth 토큰 관련 함수들
-export async function getOAuthToken(request: Request): Promise<string | null> {
-  const session = await getSession(request.headers.get("Cookie"));
-  return session.get("oauth_token") || null;
-}
-
 export async function getUserInfo(request: Request): Promise<any | null> {
   const session = await getSession(request.headers.get("Cookie"));
   return session.get("user_info") || null;

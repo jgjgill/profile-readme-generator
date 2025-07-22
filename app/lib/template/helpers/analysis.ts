@@ -4,7 +4,7 @@ import type { ProcessedGitHubData } from "../../types/github";
  * 사용자 활동 패턴 분석
  */
 export function analyzeUserActivity(githubData: ProcessedGitHubData) {
-  const { topLanguages, topRepositories, languageStats } = githubData;
+  const { topLanguages, topRepositories } = githubData;
   
   // 주력 언어 결정
   const primaryLanguage = topLanguages[0] || "개발";
@@ -30,7 +30,7 @@ export function analyzeUserActivity(githubData: ProcessedGitHubData) {
   );
   
   // 다양성 분석
-  const languageCount = Object.keys(languageStats).length;
+  const languageCount = topLanguages.length;
   const isPolyglot = languageCount >= 4;
   
   return {
@@ -49,17 +49,15 @@ export function analyzeUserActivity(githubData: ProcessedGitHubData) {
  * 임팩트 지표 계산
  */
 export function calculateImpactMetrics(githubData: ProcessedGitHubData) {
-  const { userProfile, topRepositories, languageStats } = githubData;
+  const { userProfile, topRepositories, topLanguages } = githubData;
   
   const totalStars = topRepositories.reduce(
     (sum, repo) => sum + repo.stargazers_count,
     0
   );
   const totalRepos = userProfile.public_repos;
-  const languageCount = Object.keys(languageStats).length;
-  const mostUsedLanguage =
-    Object.entries(languageStats).sort(([, a], [, b]) => b - a)[0]?.[0] ||
-    "Unknown";
+  const languageCount = topLanguages.length;
+  const mostUsedLanguage = topLanguages[0] || "Unknown";
   
   return {
     totalStars,

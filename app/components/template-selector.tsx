@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { ProcessedGitHubData, TechExpertData } from "~/lib/types/github";
+import type { ProcessedGitHubData } from "~/lib/types/github";
 import type { ReadmeTemplate } from "~/lib/types/template";
 import { generateDashboardTemplate } from "~/lib/template/generators/v2-dashboard";
 import { generateRPGTemplate } from "~/lib/template/generators/v2-rpg";
@@ -9,7 +9,6 @@ import ReadmeOutput from "./readme-output";
 
 interface TemplateSelectorProps {
   githubData: ProcessedGitHubData;
-  techExpertData: TechExpertData;
 }
 
 type TemplateType = "dashboard" | "rpg" | "magazine" | "certificate";

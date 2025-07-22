@@ -2,10 +2,9 @@ import { useLoaderData } from "react-router";
 import type { MetaFunction, LoaderFunctionArgs } from "react-router";
 import {
   fetchCompleteGitHubData,
-  fetchTechExpertData,
   GitHubApiError,
 } from "~/lib/github";
-import type { ProcessedGitHubData, TechExpertData } from "~/lib/types/github";
+import type { ProcessedGitHubData } from "~/lib/types/github";
 import { getGitHubToken, isLoggedIn, getUserInfo } from "~/lib/session";
 import { Header } from "~/components/header";
 import { BackgroundAnimation } from "~/components/shared/background-animation";
@@ -18,7 +17,6 @@ import {
 
 interface LoaderData {
   githubData: ProcessedGitHubData;
-  techExpertData: TechExpertData;
   username: string;
   isLoggedIn: boolean;
   userInfo: {
@@ -43,11 +41,9 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
     const userInfo = loggedIn ? await getUserInfo(request) : null;
 
     const githubData = await fetchCompleteGitHubData(username, githubToken);
-    const techExpertData = await fetchTechExpertData(username, githubToken);
 
     return {
       githubData,
-      techExpertData,
       username,
       isLoggedIn: loggedIn,
       userInfo,
@@ -89,7 +85,7 @@ export function ErrorBoundary() {
 }
 
 export default function GeneratePage() {
-  const { githubData, techExpertData, isLoggedIn, userInfo } =
+  const { githubData, isLoggedIn, userInfo } =
     useLoaderData<LoaderData>();
 
   return (
@@ -106,7 +102,6 @@ export default function GeneratePage() {
             <UserInfoSidebar userData={githubData} />
             <TemplateContent
               githubData={githubData}
-              techExpertData={techExpertData}
             />
           </div>
         </div>

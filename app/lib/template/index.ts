@@ -2,7 +2,6 @@
 export {
   generateStandardTemplate as generateReadmeTemplate,
   generateImpactTemplate,
-  generateTechExpertTemplate,
 } from "./generators";
 
 // 개별 섹션 생성 함수들
